@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="backboneit_opengraph" default="build" basedir=".">
+  
+	<property name="build.dir" value="build" />
+	<property name="build.module" value="${build.dir}/TL_ROOT/system/modules/backboneit_opengraph" />
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<mkdir dir="${build.dir}/TL_ROOT" />
+	</target>
+	
+	<target name="build" depends="clean">
+		<delete dir="${build.dir}" />
+		<mkdir dir="${build.dir}/TL_ROOT" />
+		<copy todir="${build.dir}/TL_ROOT">
+			<fileset dir="TL_ROOT" includes="**/*.php" />
+			<filterchain>
+				<headfilter lines="-1" skip="1" />
+				<concatfilter prepend="publish/license_php.txt" />
+			</filterchain>
+		</copy>
+		<copy todir="${build.dir}/TL_ROOT">
+			<fileset dir="TL_ROOT" excludes="**/*.php" />
+		</copy>
+
+	  	<zip destfile="${build.dir}/backboneit_opengraph.zip">
+	  		<zipfileset dir="${build.dir}/TL_ROOT" />
+	  	</zip>
+	</target>
+</project>
