@@ -8,14 +8,20 @@ $GLOBALS['TL_DCA']['tl_opengraph_types'] = array(
 	'list' => array(
 		'sorting' => array(
 			'mode'		=> 1,
-			'fields'	=> array('name'),
+			'fields'	=> array('label'),
 			'flag'		=> 1
 		),
 		'label' => array(
-			'fields'	=> array('prefix', 'name', 'namespace'),
-			'format'	=> '%s:%s <span class="gray grey">[%s]</span>'
+			'fields'	=> array('label', 'prefix', 'name', 'namespace'),
+			'format'	=> '<strong>%s</strong> %s:%s <span style="color:#b3b3b3; padding-left:3px;">[%s]</span>'
 		),
 		'global_operations' => array(
+			'all' => array(
+				'label'		=> &$GLOBALS['TL_LANG']['MSC']['all'],
+				'href'		=> 'act=select',
+				'class'		=> 'header_edit_all',
+				'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+			)
 		),
 		'operations' => array(
 			'edit' => array(
@@ -51,6 +57,7 @@ $GLOBALS['TL_DCA']['tl_opengraph_types'] = array(
 			'label'			=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['label'],
 			'inputType'		=> 'text',
 			'eval'			=> array(
+				'unique'		=> true,
 				'maxlength'		=> 255,
 				'tl_class'		=> 'clr w50'
 			)

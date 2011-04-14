@@ -1,10 +1,13 @@
 <?php
 
-class OpenGraphInjector {
+class OpenGraphInjector extends Controller {
 	
 	protected $objOpenGraph;
 
-	private function __construct() {}
+	protected function __construct() {
+		parent::__construct();
+		$this->import('Database');
+	}
 	
 	private final function __clone() {}
 	
@@ -15,83 +18,25 @@ class OpenGraphInjector {
 		global $objPage;
 		$objCurrent = $objPage;
 		
-		while(!$objCurrent->backboneit_opengraph && $objCurrent->pid) {
-			$objCurrent = $this->Database->prepare(
-				'SELECT * FROM tl_page WHERE id=?'
-			)->execute($objCurrent->pid);
+		if(!$objCurrent->backboneit_opengraph) {
+			do {
+				$objCurrent = $this->Database->prepare(
+					'SELECT * FROM tl_page WHERE id=?'
+				)->execute($objCurrent->pid);
+			} while(!$objCurrent->backboneit_opengraph_handdown && $objCurrent->pid);
+			
+			if(!$objCurrent->backboneit_opengraph)
+				return;
 		}
 		
-		if(!$objCurrent->backboneit_opengraph)
-			return;
+		$arrCurrent = $objCurrent->row();
 		
-		$objOG = new OpenGraph(array(
-			OpenGraph::TITLE => $objCurrent->backboneit_opengraph_title,
-			OpenGraph::TYPE => $objCurrent->backboneit_opengraph_type,
-			OpenGraph::DESCRIPTION => $objCurrent->backboneit_opengraph_description,
-			OpenGraph::IMAGE => $objCurrent->backboneit_opengraph_image,
-			OpenGraph::URL => '', 
-			OpenGraph::SITE => $objPage->rootTitle
+		$this->objOpenGraph = OpenGraph::createFromDataset($arrCurrent, array(
+			OpenGraph::TITLE		=> $objCurrent->pageTitle ? $objCurrent->pageTitle : $objCurrent->title,
+			OpenGraph::URL			=> $this->generateFrontendUrl($arrCurrent),
+			OpenGraph::DESCRIPTION	=> $objCurrent->description,
+			OpenGraph::SITE			=> $objPage->rootTitle
 		));
-	
-		$arrGeo = deserialize($objCurrent->backboneit_opengraph_geo);
-		if($arrGeo[0] && $arrGeo[1]) {
-			$objOG->set(OpenGraph::LATITUDE, $arrGeo[0]);
-			$objOG->set(OpenGraph::LONGITUDE, $arrGeo[1]);
-		}
-		
-		switch($objCurrent->backboneit_opengraph_type) {
-			case 'book':
-				if($objCurrent->backboneit_opengraph_isbn)
-					$objOG->set(OpenGraph::ISBN, $objCurrent->backboneit_opengraph_isbn);
-				break;
-				
-			case 'product':
-				if($objCurrent->backboneit_opengraph_upc)
-					$objOG->set(OpenGraph::ISBN, $objCurrent->backboneit_opengraph_upc);
-				break;
-		}
-		
-		
-		$objOG->set();
-		$objOG->set();
-  `backboneit_opengraph_street` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_postal` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_locality` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_region` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_country` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_email` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_phone` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_fax` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_video` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_videodim` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_audio` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_audiotitle` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_audioartist` varchar(255) NOT NULL default '',
-  `backboneit_opengraph_audioalbum` varchar(255) NOT NULL default '',
-		
-	
-
-	const STREET		= 'og:street-address';
-	const LOCALITY		= 'og:locality';
-	const REGION		= 'og:region';
-	const POSTAL		= 'og:postal-code';
-	const COUNTRY		= 'og:country-name';
-	
-	const EMAIL			= 'og:email';
-	const PHONE			= 'og:phone_number';
-	const FAX			= 'og:fax_number';
-	
-	const VIDEO			= 'og:video';
-	const VIDEO_WIDTH	= 'og:video:width';
-	const VIDEO_HEIGHT	= 'og:video:height';
-	const VIDEO_TYPE	= 'og:video:type';
-	
-	const AUDIO			= 'og:audio';
-	const AUDIO_TITLE	= 'og:audio:title';
-	const AUDIO_ARTIST	= 'og:audio:artist';
-	const AUDIO_ALBUM	= 'og:audio:album';
-	const AUDIO_TYPE	= 'og:audio:type';
-	
 	}
 	
 	public function inject() {
@@ -101,7 +46,10 @@ class OpenGraphInjector {
 		$GLOBALS['TL_HEAD'][] = strval($this->objOpenGraph);
 	}
 	
-	public function injectNS($strBuffer) {
+	public function injectNS($strBuffer, $strTemplate) {
+		if(strncmp($strTemplate, 'fe_', 3) !== 0)
+			return;
+			
 		$strHTMLNSDecl = 'xmlns="http://www.w3.org/1999/xhtml"';
 		$strStart = strpos($strBuffer, $strHTMLNSDecl) + strlen($strHTMLNSDecl);
 		return substr_replace($strBuffer, ' ' . OpenGraph::getNamespaceDecl(), $strStart, 0);

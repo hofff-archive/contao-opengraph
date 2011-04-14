@@ -19,6 +19,7 @@ CREATE TABLE `tl_opengraph_types` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tl_page` (
+  `backboneit_opengraph_handdown` char(1) NOT NULL default '',
   `backboneit_opengraph` char(1) NOT NULL default '',
   `backboneit_opengraph_title` varchar(255) NOT NULL default '',
   `backboneit_opengraph_type` varchar(255) NOT NULL default '',

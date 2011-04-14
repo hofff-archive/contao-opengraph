@@ -37,6 +37,21 @@ class OpenGraphDCA extends Backend {
 		return $varValue;
 	}
 	
+	public function validateDimension($varValue) {
+		$arrDim = deserialize($varValue);
+		
+		if(!is_array($arrDim)
+		|| ($arrDim[0] == '' && $arrDim[1] == ''))
+			return;
+			
+		if(!preg_match('/^[0-9]*$/', $arrDim[0])
+		|| !preg_match('/^[0-9]*$/', $arrDim[1]))
+			throw new Exception($GLOBALS['TL_LANG']['backboneit_opengraph']['dimError']);
+		
+		return $varValue;
+		
+	}
+	
 	private static $objInstance;
 	
 	public static function getInstance() {

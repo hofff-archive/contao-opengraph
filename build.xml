@@ -3,6 +3,8 @@
   
 	<property name="build.dir" value="build" />
 	<property name="build.module" value="${build.dir}/TL_ROOT/system/modules/backboneit_opengraph" />
+	<property name="minjs.dir" value="${build.module}/js" />
+	<property name="mincss.dir" value="${build.module}/css" />
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
@@ -10,8 +12,6 @@
 	</target>
 	
 	<target name="build" depends="clean">
-		<delete dir="${build.dir}" />
-		<mkdir dir="${build.dir}/TL_ROOT" />
 		<copy todir="${build.dir}/TL_ROOT">
 			<fileset dir="TL_ROOT" includes="**/*.php" />
 			<filterchain>
@@ -22,9 +22,10 @@
 		<copy todir="${build.dir}/TL_ROOT">
 			<fileset dir="TL_ROOT" excludes="**/*.php" />
 		</copy>
-
-	  	<zip destfile="${build.dir}/backboneit_opengraph.zip">
+		
+	  	<zip destfile="${build.dir}/backboneit_mod_article.zip">
 	  		<zipfileset dir="${build.dir}/TL_ROOT" />
 	  	</zip>
 	</target>
+	
 </project>

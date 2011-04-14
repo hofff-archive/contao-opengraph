@@ -1,16 +1,20 @@
 <?php
 
-foreach(array('regular') as $strName) {
-	$GLOBALS['TL_DCA']['tl_page']['palettes'][$strName] = preg_replace(
+$ns = 'backboneit_opengraph';
+
+$this->loadLanguageFile($ns);
+
+foreach(array('regular', 'root') as $strKey) {
+	$GLOBALS['TL_DCA']['tl_page']['palettes'][$strKey] = preg_replace(
 		'@(\{meta_legend\}[^;]*;)@',
-		'$1{backboneit_opengraph_legend},backboneit_opengraph;',
-		$GLOBALS['TL_DCA']['tl_page']['palettes'][$strName]
+		'$1{backboneit_opengraph_legend},backboneit_opengraph_handdown,backboneit_opengraph;',
+		$GLOBALS['TL_DCA']['tl_page']['palettes'][$strKey]
 	);
 }
 
+$GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'backboneit_opengraph';
 $GLOBALS['TL_DCA']['tl_page']['subpalettes']['backboneit_opengraph']
 	= 'backboneit_opengraph_title,backboneit_opengraph_type,'
-	
 	. 'backboneit_opengraph_description,backboneit_opengraph_image,'
 	
 	// address
@@ -27,17 +31,27 @@ $GLOBALS['TL_DCA']['tl_page']['subpalettes']['backboneit_opengraph']
 	
 	// audio
 	. 'backboneit_opengraph_audio,backboneit_opengraph_audiotitle,'
-	. 'backboneit_opengraph_audioartist,backboneit_opengraph_audioalbum';
+	. 'backboneit_opengraph_audioartist,backboneit_opengraph_audioalbum,'
+	
+	. 'backboneit_opengraph_isbn,backboneit_opengraph_upc';
 	
 	
 $GLOBALS['TL_DCA']['tl_page']['fields'] = array_merge($GLOBALS['TL_DCA']['tl_page']['fields'], array(
+	'backboneit_opengraph_handdown' => array(
+		'label'			=> &$GLOBALS['TL_LANG'][$ns]['opengraph_handdown'],
+		'exclude'		=> true,
+		'inputType'		=> 'checkbox',
+		'eval'			=> array(
+			'tl_class'			=> 'clr w50 cbx'
+		)
+	),
 	'backboneit_opengraph' => array(
 		'label'			=> &$GLOBALS['TL_LANG'][$ns]['opengraph'],
 		'exclude'		=> true,
 		'inputType'		=> 'checkbox',
 		'eval'			=> array(
 			'submitOnChange'	=> true,
-			'tl_class'			=> 'clr'
+			'tl_class'			=> 'w50 cbx'
 		)
 	),
 	'backboneit_opengraph_title' => array(
@@ -45,7 +59,6 @@ $GLOBALS['TL_DCA']['tl_page']['fields'] = array_merge($GLOBALS['TL_DCA']['tl_pag
 		'exclude'		=> true,
 		'inputType'		=> 'text',
 		'eval'			=> array(
-			'mandatory'			=> true,
 			'maxlength'			=> 255,
 			'tl_class'			=> 'clr w50'
 		)

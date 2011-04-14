@@ -1,0 +1,21 @@
+=== Titel
+OpenGraph Metadaten
+
+
+=== Suchbegriffe
+opengraph,facebook,og,like,share
+
+
+=== Teaser
+Erlaubt es OpenGraph Metadaten für Seiten zu definieren. (Diese werden zum Beispiel von Facebook beim "liken" verwendet)
+
+
+=== Beschreibung
+<p>Die OpenGraph Metadaten werden in der Seitenstruktur eingetragen. Vieles ist optional bzw.
+wird aus der vorhandenen Seitenstruktur generiert (z.B. "og:site_name"). Geplant ist es, die Metadaten auch
+für News, Events, als Modul und Inhaltselement zu integrieren, dass mache ich jedoch davon
+abhängig wie die Erweiterung ankommt oder wann ich es brauche.</p>
+
+
+=== Freigabe-Notizen und Änderungs-Log
+    
