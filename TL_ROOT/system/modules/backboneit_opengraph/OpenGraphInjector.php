@@ -47,12 +47,12 @@ class OpenGraphInjector extends Controller {
 	}
 	
 	public function injectNS($strBuffer, $strTemplate) {
-		if(strncmp($strTemplate, 'fe_', 3) !== 0)
+		if(!isset($this->objOpenGraph) || strncmp($strTemplate, 'fe_', 3) !== 0)
 			return;
 			
 		$strHTMLNSDecl = 'xmlns="http://www.w3.org/1999/xhtml"';
 		$strStart = strpos($strBuffer, $strHTMLNSDecl) + strlen($strHTMLNSDecl);
-		return substr_replace($strBuffer, ' ' . OpenGraph::getNamespaceDecl(), $strStart, 0);
+		return substr_replace($strBuffer, ' ' . $this->objOpenGraph->getNamespaceDecl(), $strStart, 0);
 	}
 	
 	private static $objInstance;

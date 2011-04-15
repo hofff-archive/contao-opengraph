@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['TL_DCA']['tl_opengraph_types'] = array(
+$GLOBALS['TL_DCA']['tl_backboneit_opengraph_types'] = array(
 	'config' => array(
 		'dataContainer'		=> 'Table',
 	),
@@ -25,22 +25,22 @@ $GLOBALS['TL_DCA']['tl_opengraph_types'] = array(
 		),
 		'operations' => array(
 			'edit' => array(
-				'label'	=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['edit'],
+				'label'	=> &$GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['edit'],
 				'href'	=> 'act=edit',
 				'icon'	=> 'edit.gif'
 			),
 			'copy' => array(
-				'label'	=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['copy'],
+				'label'	=> &$GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['copy'],
 				'href'	=> 'act=copy',
 				'icon'	=> 'copy.gif'
 			),
 			'delete' => array(
-				'label'	=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['delete'],
+				'label'	=> &$GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['delete'],
 				'href'	=> 'act=delete',
 				'icon'	=> 'delete.gif'
 			),
 			'show' => array(
-				'label'	=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['show'],
+				'label'	=> &$GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['show'],
 				'href'	=> 'act=show',
 				'icon'	=> 'show.gif'
 			)
@@ -49,12 +49,12 @@ $GLOBALS['TL_DCA']['tl_opengraph_types'] = array(
 
 	
 	'palettes' => array(
-		'default'	=> '{opengraph_types_legend},label,prefix,name,namespace'
+		'default'	=> '{type_legend},label,prefix,name,namespace'
 	),
 
 	'fields' => array(
 		'label' => array(
-			'label'			=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['label'],
+			'label'			=> &$GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['label'],
 			'inputType'		=> 'text',
 			'eval'			=> array(
 				'unique'		=> true,
@@ -63,7 +63,7 @@ $GLOBALS['TL_DCA']['tl_opengraph_types'] = array(
 			)
 		),
 		'prefix' => array(
-			'label'			=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['prefix'],
+			'label'			=> &$GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['prefix'],
 			'inputType'		=> 'text',
 			'save_callback'	=> array(
 				array('OpenGraphDCA', 'validateNCName')
@@ -75,7 +75,7 @@ $GLOBALS['TL_DCA']['tl_opengraph_types'] = array(
 			)
 		),
 		'name' => array(
-			'label'			=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['name'],
+			'label'			=> &$GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['name'],
 			'inputType'		=> 'text',
 			'save_callback'	=> array(
 				array('OpenGraphDCA', 'validateNCName')
@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_opengraph_types'] = array(
 			)
 		),
 		'namespace' => array(
-			'label'			=> &$GLOBALS['TL_LANG']['tl_opengraph_types']['namespace'],
+			'label'			=> &$GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['namespace'],
 			'inputType'		=> 'text',
 			'eval'			=> array(
 				'mandatory'		=> true,

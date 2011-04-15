@@ -8,7 +8,7 @@
 -- **********************************************************
 
 
-CREATE TABLE `tl_opengraph_types` (
+CREATE TABLE `tl_backboneit_opengraph_types` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `tstamp` int(10) unsigned NOT NULL default '0',
   `label` varchar(255) NOT NULL default '',

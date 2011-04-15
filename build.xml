@@ -23,7 +23,7 @@
 			<fileset dir="TL_ROOT" excludes="**/*.php" />
 		</copy>
 		
-	  	<zip destfile="${build.dir}/backboneit_mod_article.zip">
+	  	<zip destfile="${build.dir}/backboneit_opengraph.zip">
 	  		<zipfileset dir="${build.dir}/TL_ROOT" />
 	  	</zip>
 	</target>

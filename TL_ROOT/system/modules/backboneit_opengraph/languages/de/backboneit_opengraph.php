@@ -2,6 +2,8 @@
 
 $ns = 'backboneit_opengraph';
 
+$GLOBALS['TL_LANG'][$ns]['dimError']			= 'Nur positive Ganzzahlen sind für Dimensionen erlaubt';
+
 $GLOBALS['TL_LANG'][$ns]['opengraph_handdown']	= array('OpenGraph Metadaten vererben', 'Vererbt die OpenGraph Metadaten dieser Seite an derren Unterseiten. OpenGraph Metadaten werden nur komplett oder gar nicht vererbt. Diese Option kann auch sinnvoll sein um zu verhindern, dass Metadaten einer Elternseite weiter an Unterseiten vererbt werden.');
 $GLOBALS['TL_LANG'][$ns]['opengraph']			= array('OpenGraph Metadaten definieren', 'OpenGraph Metadaten festlegen.');
 $GLOBALS['TL_LANG'][$ns]['title']				= array('Titel', 'Erforderlich. Wenn frei gelassen, wird der Seitentitel oder der Seitenname verwendet.');

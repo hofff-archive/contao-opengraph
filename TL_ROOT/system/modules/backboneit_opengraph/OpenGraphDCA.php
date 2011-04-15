@@ -22,7 +22,7 @@ class OpenGraphDCA extends Backend {
 	public function getTypeOptions() {
 		$arrOptions = self::$arrOfficialTypes;
 		
-		$objResult = $this->Database->execute('SELECT id, name FROM tl_opengraph_types');
+		$objResult = $this->Database->execute('SELECT id, name FROM tl_backboneit_opengraph_types');
 		
 		while($objResult->next())
 			$arrOptions['custom'][$objResult->id] = $objResult->name;
@@ -32,7 +32,7 @@ class OpenGraphDCA extends Backend {
 	
 	public function validateNCName($varValue) {
 		if(!preg_match('@[a-z][a-z0-9]*@i', $varValue))
-			throw new Exception($GLOBALS['TL_LANG']['tl_opengraph_types']['ncNameError']);
+			throw new Exception($GLOBALS['TL_LANG']['tl_backboneit_opengraph_types']['ncNameError']);
 			
 		return $varValue;
 	}

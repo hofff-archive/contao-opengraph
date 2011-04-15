@@ -66,6 +66,14 @@ class OpenGraph {
 	public static function createFromDataset(array $arrData, array $arrFallback = null) {
 		$objOG = new self();
 		
+		if(is_numeric($arrData['backboneit_opengraph_type'])) {
+			$objType = Database::getInstance()->prepare(
+				'SELECT * FROM tl_backboneit_opengraph_types WHERE id = ?'
+			)->execute($arrData['backboneit_opengraph_type']);
+			
+			$arrData['backboneit_opengraph_type'] = $objOG->addNamespace($objType->prefix, $objType->namespace) . ':' . $objType->name;
+		}
+		
 		foreach(array(
 			OpenGraph::TITLE		=> 'backboneit_opengraph_title',
 			OpenGraph::TYPE			=> 'backboneit_opengraph_type',
@@ -154,7 +162,8 @@ class OpenGraph {
 		return $objOG;
 	}
 	
-	protected $arrProperties;
+	protected $arrProperties = array();
+	protected $arrNamespaces = array('' => false, 'og' => false);
 	
 	public function __construct(array $arrProperties = null) {
 		if($arrProperties)
@@ -197,13 +206,37 @@ class OpenGraph {
 		
 		foreach($this->arrProperties as $strName => $strContent)
 			if(strlen($strContent))
-				$strReturn .= '<meta property="' . $strName . '" content="' . specialchars($strContent) . '" />' . "\n";
+				$strReturn .= '<meta property="' . $strName . '" content="' . htmlspecialchars($strContent) . '" />' . "\n";
 			
 		return $strReturn; 
 	}
 	
-	public static function getNamespaceDecl($strPrefix = self::NS_PREFIX_OG) {
-		return sprintf('xmlns%s="%s"', $strPrefix ? ':' . $strPrefix : '', self::NS_OG); 
+	public function addNamespace($strPrefix, $strNS, $strAlternate = true) {
+		if(!isset($this->arrNamespaces[$strPrefix])) {
+			$this->arrNamespaces[$strPrefix] = $strNS;
+		} elseif($blnAlternate) {
+			do {
+				$strPrefix = 'a' . substr(md5($strPrefix), 0, 8);
+			} while(isset($this->arrNamespaces[$strPrefix]));
+			
+			$this->arrNamespaces[$strPrefix] = $strNS;
+		} else {
+			return null;
+		}
+		return $strPrefix;
+	}
+	
+	public function getNamespaceDecl($strPrefix = self::NS_PREFIX_OG) {
+		$arrNS = $this->arrNamespaces;
+		$arrNS[$strPrefix] = self::NS_OG;
+		
+		$strNSDecls = '';
+		
+		foreach($arrNS as $strPrefix => $strNS)
+			if($strNS)
+				$strNSDecls .= sprintf(' xmlns%s="%s"', strlen($strPrefix) ? ':' . $strPrefix : '', $strNS);
+		
+		return trim($strNSDecls); 
 	}
 	
 }
