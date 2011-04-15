@@ -150,13 +150,15 @@ class OpenGraph {
 		if(!isset($objOG->{OpenGraph::IMAGE})) {
 			return null;
 		} elseif(strncmp($objOG->get(OpenGraph::IMAGE), 'http://', 7) !== 0) {
-			$objOG->set(OpenGraph::IMAGE, $strBase . $objOG->get(OpenGraph::IMAGE));
+			$strURL = $objOG->get(OpenGraph::IMAGE);
+			$objOG->set(OpenGraph::IMAGE, $strBase . ($strURL[0] == '/' ? substr($strURL, 1) : $strURL));
 		}
 		
 		if(!isset($objOG->{OpenGraph::URL})) {
 			$objOG->set(OpenGraph::URL, $strBase . Environment::getInstance()->request);
 		} elseif(strncmp($objOG->get(OpenGraph::URL), 'http://', 7) !== 0) {
-			$objOG->set(OpenGraph::URL, $strBase . $objOG->get(OpenGraph::URL));
+			$strURL = $objOG->get(OpenGraph::URL);
+			$objOG->set(OpenGraph::URL, $strBase . ($strURL[0] == '/' ? substr($strURL, 1) : $strURL));
 		}
 		
 		return $objOG;

@@ -2,4 +2,6 @@ h1. Changelog
 
 h2. 1.0.0
 
+* 4 *Fix*: The namespace injector method does not return the buffer, if it returns early
+* 3 *Change*: Trim leading with space off of relative paths, when they are made absolute
 * 1 Initial release

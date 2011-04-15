@@ -48,7 +48,7 @@ class OpenGraphInjector extends Controller {
 	
 	public function injectNS($strBuffer, $strTemplate) {
 		if(!isset($this->objOpenGraph) || strncmp($strTemplate, 'fe_', 3) !== 0)
-			return;
+			return $strBuffer;
 			
 		$strHTMLNSDecl = 'xmlns="http://www.w3.org/1999/xhtml"';
 		$strStart = strpos($strBuffer, $strHTMLNSDecl) + strlen($strHTMLNSDecl);
