@@ -11,55 +11,64 @@ class OpenGraphInjector extends Controller {
 	
 	private final function __clone() {}
 	
+	public function getOpenGraph() {
+		return $this->objOpenGraph;
+	}
+	
+	public function setOpenGraph(OpenGraph $objOpenGraph) {
+		$this->objOpenGraph = $objOpenGraph;
+	}
+	
 	public function generatePageOG() {
-		if(isset($this->objOpenGraph))
+		if(isset($this->objOpenGraph)) {
 			return;
+		}
 		
-		global $objPage;
-		$objCurrent = $objPage;
+		$objCurrent = $GLOBALS['objPage'];
 		
-		if(!$objCurrent->backboneit_opengraph) {
+		if(!$objCurrent->bbit_og) {
 			do {
 				$objCurrent = $this->Database->prepare(
-					'SELECT * FROM tl_page WHERE id=?'
+					'SELECT * FROM tl_page WHERE id = ?'
 				)->execute($objCurrent->pid);
-			} while(!$objCurrent->backboneit_opengraph_handdown && $objCurrent->pid);
+			} while(!$objCurrent->bbit_og_handdown && $objCurrent->pid && $objCurrent->type != 'root');
 			
-			if(!$objCurrent->backboneit_opengraph)
+			if(!$objCurrent->bbit_og) {
 				return;
+			}
 		}
 		
 		$arrCurrent = $objCurrent->row();
 		
 		$this->objOpenGraph = OpenGraph::createFromDataset($arrCurrent, array(
-			OpenGraph::TITLE		=> $objCurrent->pageTitle ? $objCurrent->pageTitle : $objCurrent->title,
-			OpenGraph::URL			=> $this->generateFrontendUrl($arrCurrent),
-			OpenGraph::DESCRIPTION	=> $objCurrent->description,
-			OpenGraph::SITE			=> $objPage->rootTitle
+			'og:title'		=> $objCurrent->pageTitle ? $objCurrent->pageTitle : strip_tags($objCurrent->title),
+			'og:url'		=> $this->generateFrontendUrl($arrCurrent),
+			'og:description'=> $objCurrent->description,
+			'og:site_name'	=> strip_tags($GLOBALS['objPage']->rootTitle)
 		));
 	}
 	
-	public function inject() {
-		if(!isset($this->objOpenGraph))
+	public function inject($objPage, $objLayout, $objPageGenerator) {
+		if(!isset($this->objOpenGraph)) {
 			return;
+		}
 			
 		$GLOBALS['TL_HEAD'][] = strval($this->objOpenGraph);
-	}
-	
-	public function injectNS($strBuffer, $strTemplate) {
-		if(!isset($this->objOpenGraph) || strncmp($strTemplate, 'fe_', 3) !== 0)
-			return $strBuffer;
-			
-		$strHTMLNSDecl = 'xmlns="http://www.w3.org/1999/xhtml"';
-		$strStart = strpos($strBuffer, $strHTMLNSDecl) + strlen($strHTMLNSDecl);
-		return substr_replace($strBuffer, ' ' . $this->objOpenGraph->getNamespaceDecl(), $strStart, 0);
+		
+		$arrPrefixes = array();
+		foreach($this->objOpenGraph->getNamespaces() as $strPrefix => $strNS) {
+			$arrPrefixes[] = $strPrefix . ': ' . $strNS;
+		}
+		
+		$objPageGenerator->Template->og_prefixes = implode(' ', $arrPrefixes);
 	}
 	
 	private static $objInstance;
 	
 	public static function getInstance() {
-		if(!isset(self::$objInstance))
+		if(!isset(self::$objInstance)) {
 			self::$objInstance = new self();
+		}
 			
 		return self::$objInstance;
 	}

@@ -1,8 +1,8 @@
 <?php
 
-$GLOBALS['BE_MOD']['system']['backboneit_opengraph_types'] = array(
-	'tables' => array('tl_backboneit_opengraph_types'),
-	'icon' => 'system/modules/backboneit_opengraph/images/og.png'
+$GLOBALS['BE_MOD']['system']['bbit_og_types'] = array(
+	'tables' => array('tl_bbit_og_types'),
+	'icon' => 'system/modules/backboneit_opengraph/html/images/og.png'
 );
 //$GLOBALS['TL_CTE']['backboneit']['backboneit_opengraph'] = 'ContentOpenGraph';
 
