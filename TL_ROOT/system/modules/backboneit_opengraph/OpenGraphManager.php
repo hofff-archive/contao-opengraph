@@ -1,6 +1,6 @@
 <?php
 
-class OpenGraphInjector extends Controller {
+class OpenGraphManager extends Controller {
 	
 	protected $objOpenGraph;
 

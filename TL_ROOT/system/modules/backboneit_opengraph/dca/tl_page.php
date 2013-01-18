@@ -1,271 +1,140 @@
 <?php
 
-$ns = 'backboneit_opengraph';
+$this->loadLanguageFile('bbit_og');
 
-$this->loadLanguageFile($ns);
+$GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'bbit_og';
+$GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'bbit_og_type';
 
-foreach(array('regular', 'root') as $strKey) {
-	$GLOBALS['TL_DCA']['tl_page']['palettes'][$strKey] = preg_replace(
-		'@(\{meta_legend\}[^;]*;)@',
-		'$1{backboneit_opengraph_legend},backboneit_opengraph_handdown,backboneit_opengraph;',
-		$GLOBALS['TL_DCA']['tl_page']['palettes'][$strKey]
-	);
+$strOGPalette = ',bbit_og_type'
+	. ',bbit_og_title,bbit_og_site'
+	. ',bbit_og_url'
+	. ',bbit_og_image,bbit_og_imageSize'
+	. ',bbit_og_description'
+//	. ',bbit_og_curies,bbit_og_custom'
+	;
+$arrOGPalettes = array();
+foreach($GLOBALS['TL_DCA']['tl_page']['palettes'] as $strKey => &$strPalette) if($strKey != '__selector__') {
+	$strPalette = preg_replace('@(\{meta_legend\}[^;]*;)@', '$1{bbit_og_legend},bbit_og;', $strPalette);
+	$arrOGPalettes[$strKey . 'bbit_og_page'] =
+	$arrOGPalettes[$strKey . 'bbit_og_tree'] = preg_replace('@\}\,bbit_og@', '$0' . $strOGPalette, $strPalette);
 }
+$GLOBALS['TL_DCA']['tl_page']['palettes'] = array_merge(
+	$GLOBALS['TL_DCA']['tl_page']['palettes'],
+	$arrOGPalettes
+);
+$GLOBALS['TL_DCA']['tl_page']['subpalettes']['bbit_og_type_custom'] = 'bbit_og_typeCustom';
 
-$GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'backboneit_opengraph';
-$GLOBALS['TL_DCA']['tl_page']['subpalettes']['backboneit_opengraph']
-	= 'backboneit_opengraph_title,backboneit_opengraph_type,'
-	. 'backboneit_opengraph_description,backboneit_opengraph_image,'
-	
-	// address
-	. 'backboneit_opengraph_street,backboneit_opengraph_geo,'
-	. 'backboneit_opengraph_postal,backboneit_opengraph_locality,'
-	. 'backboneit_opengraph_region,backboneit_opengraph_country,'
-	
-	// contact
-	. 'backboneit_opengraph_email,'
-	. 'backboneit_opengraph_phone,backboneit_opengraph_fax,'
-	
-	// video
-	. 'backboneit_opengraph_video,backboneit_opengraph_videodim,'
-	
-	// audio
-	. 'backboneit_opengraph_audio,backboneit_opengraph_audiotitle,'
-	. 'backboneit_opengraph_audioartist,backboneit_opengraph_audioalbum,'
-	
-	. 'backboneit_opengraph_isbn,backboneit_opengraph_upc';
-	
-	
-$GLOBALS['TL_DCA']['tl_page']['fields'] = array_merge($GLOBALS['TL_DCA']['tl_page']['fields'], array(
-	'backboneit_opengraph_handdown' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['opengraph_handdown'],
-		'exclude'		=> true,
-		'inputType'		=> 'checkbox',
-		'eval'			=> array(
-			'tl_class'			=> 'clr w50 cbx'
-		)
+
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_page']['bbit_og'],
+	'exclude'		=> true,
+	'inputType'		=> 'select',
+	'options'		=> array('bbit_og_page', 'bbit_og_tree', 'bbit_og_parent', 'bbit_og_root', 'bbit_og_disablePage', 'bbit_og_disableTree'),
+	'reference'		=> &$GLOBALS['TL_LANG']['tl_page']['bbit_ogOptions'],
+	'eval'			=> array(
+		'chosen'		=> true,
+		'submitOnChange'=> true,
+		'includeBlankOption'=> true,
+		'blankOptionLabel'=> &$GLOBALS['TL_LANG']['tl_page']['bbit_ogOptions'][''],
+		'tl_class'		=> '',
 	),
-	'backboneit_opengraph' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['opengraph'],
-		'exclude'		=> true,
-		'inputType'		=> 'checkbox',
-		'eval'			=> array(
-			'submitOnChange'	=> true,
-			'tl_class'			=> 'w50 cbx'
-		)
-	),
-	'backboneit_opengraph_title' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['title'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_type' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['type'],
-		'exclude'		=> true,
-		'inputType'		=> 'select',
-		'default'		=> 'website',
-		'options_callback' => array('OpenGraphDCA', 'getTypeOptions'),
-		'reference'		=> &$GLOBALS['TL_LANG'][$ns]['type_labels'],
-		'eval'			=> array(
-			'mandatory'			=> true,
-			'tl_class'			=> 'w50'
-		)
-	),
-	'backboneit_opengraph_description' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['description'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 1022,
-			'tl_class'			=> 'clr long'
-		)
-	),
-	'backboneit_opengraph_image' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['image'],
-		'exclude'		=> true,
-		'inputType'		=> 'fileTree',
-		'eval'			=> array(
-			'mandatory'			=> true,
-			'files'				=> true,
-			'filesOnly'			=> true,
-			'extensions'		=> 'jpg,jpeg,gif,png',
-			'fieldType'			=> 'radio',
-			'tl_class'			=> 'clr'
-		)
-	),
-	'backboneit_opengraph_street' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['street'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_geo' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['geo'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 100,
-			'multiple'			=> true,
-			'size'				=> 2,
-			'rgxp'				=> 'digit',
-			'tl_class'			=> 'w50'
-		)
-	),
-	'backboneit_opengraph_postal' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['postal'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_locality' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['locality'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'w50'
-		)
-	),
-	'backboneit_opengraph_region' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['region'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_country' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['country'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'w50'
-		)
-	),
-	'backboneit_opengraph_email' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['email'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'rgxp'				=> 'email',
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_phone' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['phone'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'rgxp'				=> 'phone',
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_fax' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['fax'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'rgxp'				=> 'phone',
-			'tl_class'			=> 'w50'
-		)
-	),
-	'backboneit_opengraph_video' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['video'],
-		'exclude'		=> true,
-		'inputType'		=> 'fileTree',
-		'eval'			=> array(
-			'files'				=> true,
-			'filesOnly'			=> true,
-			'extensions'		=> 'flv,swf,mp4',
-			'fieldType'			=> 'radio',
-			'tl_class'			=> 'clr'
-		)
-	),
-	'backboneit_opengraph_videodim' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['videoDim'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'save_callback'	=> array(
-			array('OpenGraphDCA', 'validateDimension')
-		),
-		'eval'			=> array(
-			'maxlength'			=> 100,
-			'multiple'			=> true,
-			'size'				=> 2,
-			'rgxp'				=> 'digit',
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_audio' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['audio'],
-		'exclude'		=> true,
-		'inputType'		=> 'fileTree',
-		'eval'			=> array(
-			'files'				=> true,
-			'filesOnly'			=> true,
-			'extensions'		=> 'mp3',
-			'fieldType'			=> 'radio',
-			'tl_class'			=> 'clr'
-		)
-	),
-	'backboneit_opengraph_audiotitle' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['audioTitle'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_audioartist' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['audioArtist'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'w50'
-		)
-	),
-	'backboneit_opengraph_audioalbum' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['audioAlbum'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_isbn' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['isbn'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'clr w50'
-		)
-	),
-	'backboneit_opengraph_upc' => array(
-		'label'			=> &$GLOBALS['TL_LANG'][$ns]['upc'],
-		'exclude'		=> true,
-		'inputType'		=> 'text',
-		'eval'			=> array(
-			'maxlength'			=> 255,
-			'tl_class'			=> 'w50'
-		)
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_type'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['bbit_og']['type'],
+	'exclude'		=> true,
+	'inputType'		=> 'select',
+	'default'		=> 'website',
+	'options'		=> $GLOBALS['BBIT_OG']['TYPES'],
+	'reference'		=> &$GLOBALS['TL_LANG']['bbit_og']['types'],
+	'eval'			=> array(
+		'mandatory'		=> true,
+		'chosen'		=> true,
+		'submitOnChange'=> true,
+		'tl_class'		=> 'w50'
 	)
-));
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_typeCustom'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['bbit_og']['typeCustom'],
+	'exclude'		=> true,
+	'inputType'		=> 'text',
+	'eval'			=> array(
+		'mandatory'		=> true,
+		'maxlength'		=> 255,
+		'decodeEntities'=> true,
+		'tl_class'		=> 'w50'
+	)
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_title'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_page']['bbit_og_title'],
+	'exclude'		=> true,
+	'inputType'		=> 'text',
+	'eval'			=> array(
+		'maxlength'		=> 255,
+		'decodeEntities'=> true,
+		'tl_class'		=> 'clr w50'
+	)
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_site'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_page']['bbit_og_site'],
+	'exclude'		=> true,
+	'inputType'		=> 'text',
+	'eval'			=> array(
+		'maxlength'		=> 255,
+		'decodeEntities'=> true,
+		'tl_class'		=> 'w50'
+	)
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_url'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_page']['bbit_og_url'],
+	'exclude'		=> true,
+	'inputType'		=> 'text',
+	'eval'			=> array(
+		'maxlength'		=> 1022,
+		'decodeEntities'=> true,
+		'rgxp'			=> 'url',
+		'tl_class'		=> 'clr long'
+	)
+);
+	
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_image'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_page']['bbit_og_image'],
+	'exclude'		=> true,
+	'inputType'		=> 'fileTree',
+	'eval'			=> array(
+		'files'			=> true,
+		'fieldType'		=> 'radio',
+		'extensions'	=> 'gif,jpg,jpeg,png',
+		'filesOnly'		=> true,
+		'tl_class'		=> 'clr',
+	),
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_imageSize'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_page']['bbit_og_imageSize'],
+	'exclude'		=> true,
+	'inputType'		=> 'imageSize',
+	'options'		=> $GLOBALS['TL_CROP'],
+	'reference'		=> &$GLOBALS['TL_LANG']['MSC'],
+	'eval'			=> array(
+		'rgxp'			=> 'digit',
+		'nospace'		=> true,
+		'helpwizard'	=> true,
+		'tl_class'		=> 'clr w50'
+	)
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_description'] = array(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_page']['bbit_og_description'],
+	'exclude'		=> true,
+	'inputType'		=> 'textarea',
+	'eval'			=> array(
+		'style'			=> 'height: 60px;',
+		'tl_class'		=> 'clr',
+	),
+);
