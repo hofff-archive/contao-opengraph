@@ -86,7 +86,7 @@ class OpenGraphBasicData extends AbstractOpenGraphData {
 	}
 	
 	public function getImageData() {
-		return $this->image;
+		return $this->hasImage() ? $this->image : new OpenGraphProtocol();
 	}
 	
 	protected $url;
