@@ -1,5 +1,7 @@
 <?php
 
+$GLOBALS['BE_MOD']['design']['page']['bbit_og_facebookLint'] = array('ContaoOpenGraphDCA', 'keyFacebookLint');
+
 $GLOBALS['TL_HOOKS']['generatePage'][] = array('ContaoOpenGraphManager', 'inject');
 
 $GLOBALS['BBIT_OG']['TYPES'][] = new OpenGraphType('website');

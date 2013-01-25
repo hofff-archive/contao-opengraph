@@ -1,16 +1,16 @@
 <?php
 
-class OpenGraphname {
+class OpenGraphProperty {
 	
-	protected $namespace;
+	private $namespace;
 	
-	protected $name;
+	private $name;
 	
-	protected $content;
+	private $content;
 	
-	protected $prefix;
+	private $prefix;
 	
-	public function __construct($namespace, $name, $content, $prefix = null) {
+	public function __construct($namespace = null, $name = null, $content = null, $prefix = null) {
 		$this->setNamespace($namespace);
 		$this->setName($name);
 		$this->setContent($content);
@@ -25,7 +25,7 @@ class OpenGraphname {
 		return $this->isValid() ? sprintf('<meta%s property="%s" content="%s" />',
 			$prefix ? sprintf(' prefix="%s"', specialchars($this->getNamespaceDeclaration())) : '',
 			specialchars($this->getPrefixedName()),
-			specialchars($this->getContent()),
+			specialchars($this->getContent())
 		) : '';
 	}
 	

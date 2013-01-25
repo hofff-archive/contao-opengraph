@@ -2,14 +2,16 @@
 
 class OpenGraphType extends OpenGraphProperty {
 	
-	protected $type;
+	private $type;
 	
-	protected $typeNamespace;
+	private $typeNamespace;
 	
-	protected $typePrefix;
+	private $typePrefix;
 	
-	public function __construct($type, $typeNamespace = null, $typePrefix = null) {
-		parent::__construct(OpenGraphProtocol::NS_OG, 'type');
+	public function __construct($type = null, $typeNamespace = null, $typePrefix = null) {
+		parent::__construct();
+		parent::setNamespace(OpenGraphProtocol::NS_OG);
+		parent::setName('type');
 		$this->setType($type);
 		$this->setTypeNamespace($typeNamespace);
 		$this->setTypePrefix($typePrefix);
@@ -28,8 +30,8 @@ class OpenGraphType extends OpenGraphProperty {
 		}
 		return sprintf('<meta%s property="%s" content="%s" />',
 			$prefix,
-			specialchars($this->getPrefixedProperty()),
-			specialchars($this->getContent()),
+			specialchars($this->getPrefixedName()),
+			specialchars($this->getContent())
 		);
 	}
 	
@@ -90,11 +92,12 @@ class OpenGraphType extends OpenGraphProperty {
 		return $this;
 	}
 	
-	public function setProperty($property) {
+	public function setName($name) {
 		return $this;
 	}
 	
 	public function setContent($content) {
+		$this->setType($content);
 		return $this;
 	}
 	

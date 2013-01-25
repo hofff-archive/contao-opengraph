@@ -29,7 +29,7 @@ class OpenGraphImageData extends AbstractOpenGraphData {
 	
 	public function getURLData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasURL() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image', $this->getURL()));
+		$this->hasURL() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image', $this->getURL()));
 		return $protocol;
 	}
 	
@@ -55,7 +55,7 @@ class OpenGraphImageData extends AbstractOpenGraphData {
 	
 	public function getSecureURLData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasSecureURL() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image:secure_url', $this->getSecureURL()));
+		$this->hasSecureURL() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image:secure_url', $this->getSecureURL()));
 		return $protocol;
 	}
 	
@@ -82,7 +82,7 @@ class OpenGraphImageData extends AbstractOpenGraphData {
 	
 	public function getMIMETypeData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasMIMEType() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image:type', $this->getMIMEType()));
+		$this->hasMIMEType() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image:type', $this->getMIMEType()));
 		return $protocol;
 	}
 	
@@ -107,7 +107,7 @@ class OpenGraphImageData extends AbstractOpenGraphData {
 	
 	public function getWidthData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasWidth() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image:width', $this->getWidth()));
+		$this->hasWidth() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image:width', $this->getWidth()));
 		return $protocol;
 	}
 	
@@ -132,7 +132,7 @@ class OpenGraphImageData extends AbstractOpenGraphData {
 	
 	public function getHeightData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasHeight() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image:height', $this->getHeight()));
+		$this->hasHeight() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'image:height', $this->getHeight()));
 		return $protocol;
 	}
 	

@@ -1,5 +1,8 @@
 <?php
 
+$GLOBALS['TL_LANG']['tl_page']['bbit_og_facebookLint']
+	= array('OpenGraph Daten validieren', 'Die OpenGraph Daten dieser Seite mit dem Facebook URL Linter validieren.');
+
 $GLOBALS['TL_LANG']['tl_page']['bbit_og_legend'] = 'OpenGraph Metadaten';
 
 $GLOBALS['TL_LANG']['tl_page']['bbit_og']

@@ -2,6 +2,13 @@
 
 $this->loadLanguageFile('bbit_og');
 
+$GLOBALS['TL_DCA']['tl_page']['list']['operations']['bbit_og_facebookLint'] = array(
+	'label'	=> &$GLOBALS['TL_LANG']['tl_page']['bbit_og_facebookLint'],
+	'icon'	=> 'system/modules/backboneit_opengraph/html/images/og.png',
+	'href'	=> 'key=bbit_og_facebookLint',
+	'attributes' => ' onclick="window.open(this.href); return false;"',
+);
+
 $GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'bbit_og';
 $GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'bbit_og_type';
 

@@ -7,6 +7,7 @@ class ContaoOpenGraphFactory extends Controller {
 	}
 	
 	public function __construct() {
+		parent::__construct();
 		$this->import('Database');
 	}
 	
@@ -78,7 +79,7 @@ class ContaoOpenGraphFactory extends Controller {
 		
 		if(strlen($objPage->bbit_og_title)) {
 			$strTitle = $this->replaceInsertTags($objPage->bbit_og_title);
-		} elseif(strlen($objOrigin->pageTitle) {
+		} elseif(strlen($objOrigin->pageTitle)) {
 			$strTitle = $objOrigin->pageTitle;
 		} else {
 			$strTitle = strip_tags($objOrigin->title);
@@ -88,13 +89,13 @@ class ContaoOpenGraphFactory extends Controller {
 		if(strlen($objPage->bbit_og_type)) {
 			list($strNamespace, $strType) = explode(' ', $objPage->bbit_og_type, 2);
 			if(!strlen($strType)) {
-				unset($strNamespace);
 				$strType = $strNamespace;
+				unset($strNamespace);
 			}
 		} else {
 			$strType = 'website';
 		}
-		$objOGBD->setType(new OpenGraphType($strType, $strNamespace));
+		$objOGBD->setType($t = new OpenGraphType($strType, $strNamespace));
 		
 		$objOGBD->setImageData($this->generateImageData($objPage->bbit_og_image, $objPage->bbit_og_imageSize));
 		
@@ -107,20 +108,18 @@ class ContaoOpenGraphFactory extends Controller {
 		}
 		$objOGBD->setURL($strURL);
 		
-		
 		if(strlen($objPage->bbit_og_description)) {
 			$strDescription = $this->replaceInsertTags($objPage->bbit_og_description);
 		} else {
 			$strDescription = $objOrigin->description;
 		}
 		$strDescription = trim(str_replace(array("\n", "\r"), array(' ' , ''), $strDescription));
-		stlren($strDescription) && $objOGBD->setDescription($strDescription);
-		
+		strlen($strDescription) && $objOGBD->setDescription($strDescription);
 		
 		if(strlen($objPage->bbit_og_site)) {
-			$strDescription = $this->replaceInsertTags($objPage->bbit_og_site);
+			$strSiteName = $this->replaceInsertTags($objPage->bbit_og_site);
 		} else {
-			$strDescription = strip_tags($objOrigin->rootTitle);
+			$strSiteName = strip_tags($objOrigin->rootTitle);
 		}
 		strlen($strSiteName) && $objOGBD->setSiteName($strSiteName);
 		
@@ -135,6 +134,7 @@ class ContaoOpenGraphFactory extends Controller {
 			$arrSize = deserialize($arrSize, true);
 			$strImage = $this->getImage($strImage, $arrSize[0], $arrSize[1], $arrSize[2]);
 			$objImage = new File($strImage);
+			$objOGID->setURL($this->Environment->base . $strImage);
 			$objOGID->setMIMEType($objImage->mime);
 			$objOGID->setWidth($objImage->width);
 			$objOGID->setHeight($objImage->height);

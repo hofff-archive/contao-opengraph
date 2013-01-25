@@ -32,7 +32,7 @@ class OpenGraphBasicData extends AbstractOpenGraphData {
 	
 	public function getTitleData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasTitle() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'title', $this->getTitle()));
+		$this->hasTitle() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'title', $this->getTitle()));
 		return $protocol;
 	}
 	
@@ -57,7 +57,7 @@ class OpenGraphBasicData extends AbstractOpenGraphData {
 	
 	public function getTypeData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasType() ? $protocol->add($this->getType());
+		$this->hasType() && $protocol->add($this->getType());
 		return $protocol;
 	}
 	
@@ -111,7 +111,7 @@ class OpenGraphBasicData extends AbstractOpenGraphData {
 	
 	public function getURLData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasURL() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'url', $this->getURL()));
+		$this->hasURL() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'url', $this->getURL()));
 		return $protocol;
 	}
 	
@@ -137,7 +137,7 @@ class OpenGraphBasicData extends AbstractOpenGraphData {
 	
 	public function getDescriptionData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasDescription() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'description', $this->getDescription()));
+		$this->hasDescription() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'description', $this->getDescription()));
 		return $protocol;
 	}
 	
@@ -163,7 +163,7 @@ class OpenGraphBasicData extends AbstractOpenGraphData {
 	
 	public function getSiteNameData() {
 		$protocol = new OpenGraphProtocol();
-		$this->hasSiteName() ? $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'site_name', $this->getSiteName()));
+		$this->hasSiteName() && $protocol->add(new OpenGraphProperty(OpenGraphProtocol::NS_OG, 'site_name', $this->getSiteName()));
 		return $protocol;
 	}
 	
