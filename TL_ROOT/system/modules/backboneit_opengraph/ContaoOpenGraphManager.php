@@ -8,29 +8,22 @@ class ContaoOpenGraphManager extends Controller {
 	
 	private final function __clone() {}
 	
-	protected $objOGP;
+	protected $objOGD;
 	
-	public function setOpenGraph(OpenGraphProtocol $objOGP) {
-		$this->objOGP = $objOGP;
+	public function setOpenGraphData(OpenGraphData $objOGD) {
+		$this->objOGD = $objOGD;
 	}
 	
-	public function getOpenGraph() {
-		return $this->objOGP;
+	public function getOpenGraphData() {
+		return $this->objOGD;
 	}
 	
 	public function inject($objPage, $objLayout, $objPageGenerator) {
-		$objOGP = $this->objOGP
-			? $this->objOGP
+		$objOGP = $this->getOpenGraphData()
+			? $this->getOpenGraphData()
 			: ContaoOpenGraphFactory::create()->generateBasicDataByPageID($GLOBALS['objPage']->id);
 		
 		$objOGP && $GLOBALS['TL_HEAD'][] = $objOGP->getProtocol()->getMetaTags();
-		
-// 		$arrPrefixes = array();
-// 		foreach($this->objOGP->getNamespaces() as $strPrefix => $strNS) {
-// 			$arrPrefixes[] = $strPrefix . ': ' . $strNS;
-// 		}
-		
-// 		$objPageGenerator->Template->og_prefixes = implode(' ', $arrPrefixes);
 	}
 	
 	private static $objInstance;
