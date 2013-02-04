@@ -25,20 +25,16 @@ class ContaoOpenGraphBackend extends Backend {
 	
 	public function getTypeOptions() {
 		$arrOptions = array();
-		foreach($GLOBALS['BBIT_OG']['TYPES'] as $objType) {
-			if($objType->hasTypeNamespace()) {
-				$arrOptions['other'][] = sprintf('%s %s',
-					$objType->getTypeNamespace(),
-					$objType->getType()
-				);
+		foreach($GLOBALS['BBIT_OG']['TYPES'] as $strType) {
+			if(strpos($strType, ' ') === false) {
+				list($strGroup, $strName) = explode('.', $strType);
+				strlen($strName) || $strGroup = 'general';
+				$arrOptions[$strGroup][] = $strType;
 			} else {
-				list($strGroup, $strType) = explode('.', $objType->getContent());
-				strlen($strType) || $strGroup = 'general';
-				$arrOptions[$strGroup][] = $objType->getContent();
+				$arrCustom[] = $strType;
 			}
 		}
-// 		$arrOptions['other'] = (array) $arrOptions['other'];
-// 		array_unshift($arrOptions['other'], 'custom');
+		$arrCustom && $arrOptions['custom'] = $arrCustom;
 		return $arrOptions;
 	}
 	

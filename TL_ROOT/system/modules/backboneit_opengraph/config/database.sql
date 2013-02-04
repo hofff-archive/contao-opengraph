@@ -11,9 +11,7 @@
 CREATE TABLE `tl_page` (
 
   `bbit_og` varchar(255) NOT NULL default '',
-  
   `bbit_og_type` varchar(255) NOT NULL default '',
-  `bbit_og_typeCustom` varchar(255) NOT NULL default '',
   `bbit_og_title` varchar(255) NOT NULL default '',
   `bbit_og_site` varchar(255) NOT NULL default '',
   `bbit_og_url` varchar(1022) NOT NULL default '',
