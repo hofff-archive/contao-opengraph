@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['BE_MOD']['design']['page']['bbit_og_facebookLint'] = array('ContaoOpenGraphDCA', 'keyFacebookLint');
+$GLOBALS['BE_MOD']['design']['page']['bbit_og_facebookLint'] = array('ContaoOpenGraphBackend', 'keyFacebookLint');
 
 $GLOBALS['TL_HOOKS']['generatePage'][] = array('ContaoOpenGraphManager', 'inject');
 

@@ -1,6 +1,6 @@
 <?php
 
-class ContaoOpenGraphDCA extends Backend {
+class ContaoOpenGraphBackend extends Backend {
 	
 	protected function __construct() {
 		parent::__construct();
