@@ -95,7 +95,7 @@ class ContaoOpenGraphFactory extends Controller {
 		} else {
 			$strType = 'website';
 		}
-		$objOGBD->setType($t = new OpenGraphType($strType, $strNamespace));
+		$objOGBD->setType(new OpenGraphType($strType, $strNamespace));
 		
 		$objOGBD->setImageData($this->generateImageData($objPage->bbit_og_image, $objPage->bbit_og_imageSize));
 		
