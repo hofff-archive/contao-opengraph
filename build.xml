@@ -3,9 +3,11 @@
   
 	<property name="build.dir" value="build" />
 	<property name="build.module" value="${build.dir}/TL_ROOT/system/modules/backboneit_opengraph" />
-	<property name="minjs.dir" value="${build.module}/js" />
-	<property name="mincss.dir" value="${build.module}/css" />
-
+	<property name="minjs.dir" value="${build.module}/html/js" />
+	<property name="mincss.dir" value="${build.module}/html/css" />
+	
+	<import file="ext/yui-compressor/yui.xml" />
+	
 	<target name="clean">
 		<delete dir="${build.dir}" />
 		<mkdir dir="${build.dir}/TL_ROOT" />
