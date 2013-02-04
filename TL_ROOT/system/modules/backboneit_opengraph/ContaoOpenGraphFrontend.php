@@ -1,6 +1,6 @@
 <?php
 
-class ContaoOpenGraphManager extends Controller {
+class ContaoOpenGraphFrontend extends Controller {
 
 	protected function __construct() {
 		parent::__construct();

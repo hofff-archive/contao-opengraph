@@ -2,7 +2,7 @@
 
 $GLOBALS['BE_MOD']['design']['page']['bbit_og_facebookLint'] = array('ContaoOpenGraphBackend', 'keyFacebookLint');
 
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('ContaoOpenGraphManager', 'inject');
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('ContaoOpenGraphFrontend', 'inject');
 
 $GLOBALS['BBIT_OG']['TYPES'][] = new OpenGraphType('website');
 $GLOBALS['BBIT_OG']['TYPES'][] = new OpenGraphType('article');
