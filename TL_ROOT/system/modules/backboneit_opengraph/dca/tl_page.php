@@ -19,7 +19,8 @@ foreach($GLOBALS['TL_DCA']['tl_page']['palettes'] as $strKey => &$strPalette) if
 	);
 }
 
-$GLOBALS['TL_DCA']['tl_page']['subpalettes']['bbit_og']
+$GLOBALS['TL_DCA']['tl_page']['subpalettes']['bbit_og_bbit_og_page'] =
+$GLOBALS['TL_DCA']['tl_page']['subpalettes']['bbit_og_bbit_og_tree']
 	= 'bbit_og_type'
 	. ',bbit_og_title,bbit_og_site'
 	. ',bbit_og_url'
