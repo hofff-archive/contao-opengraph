@@ -23,6 +23,10 @@ class ContaoOpenGraphFrontend extends Controller {
 	}
 	
 	public function inject($objPage, $objLayout, $objPageGenerator) {
+		if($objPage->bbit_og === null) {
+			return;
+		}
+		
 		$objOGP = $this->hasOpenGraphData()
 			? $this->getOpenGraphData()
 			: ContaoOpenGraphFactory::create()->generateBasicDataByPageID($GLOBALS['objPage']->id);
