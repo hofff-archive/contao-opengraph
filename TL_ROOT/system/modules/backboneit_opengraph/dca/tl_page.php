@@ -10,26 +10,23 @@ $GLOBALS['TL_DCA']['tl_page']['list']['operations']['bbit_og_facebookLint'] = ar
 );
 
 $GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'bbit_og';
-$GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'bbit_og_type';
 
-$strOGPalette = ',bbit_og_type'
+foreach($GLOBALS['TL_DCA']['tl_page']['palettes'] as $strKey => &$strPalette) if($strKey != '__selector__') {
+	$strPalette = preg_replace(
+		'@(\{meta_legend\}[^;]*;)@',
+		'$1{bbit_og_legend},bbit_og;',
+		$strPalette
+	);
+}
+
+$GLOBALS['TL_DCA']['tl_page']['subpalettes']['bbit_og']
+	= 'bbit_og_type'
 	. ',bbit_og_title,bbit_og_site'
 	. ',bbit_og_url'
 	. ',bbit_og_image,bbit_og_imageSize'
 	. ',bbit_og_description'
 //	. ',bbit_og_curies,bbit_og_custom'
 	;
-$arrOGPalettes = array();
-foreach($GLOBALS['TL_DCA']['tl_page']['palettes'] as $strKey => &$strPalette) if($strKey != '__selector__') {
-	$strPalette = preg_replace('@(\{meta_legend\}[^;]*;)@', '$1{bbit_og_legend},bbit_og;', $strPalette);
-	$arrOGPalettes[$strKey . 'bbit_og_page'] =
-	$arrOGPalettes[$strKey . 'bbit_og_tree'] = preg_replace('@\}\,bbit_og@', '$0' . $strOGPalette, $strPalette);
-}
-$GLOBALS['TL_DCA']['tl_page']['palettes'] = array_merge(
-	$GLOBALS['TL_DCA']['tl_page']['palettes'],
-	$arrOGPalettes
-);
-$GLOBALS['TL_DCA']['tl_page']['subpalettes']['bbit_og_type_custom'] = 'bbit_og_typeCustom';
 
 
 
@@ -59,18 +56,6 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_type'] = array(
 		'mandatory'		=> true,
 		'chosen'		=> true,
 		'submitOnChange'=> true,
-		'tl_class'		=> 'w50'
-	)
-);
-
-$GLOBALS['TL_DCA']['tl_page']['fields']['bbit_og_typeCustom'] = array(
-	'label'			=> &$GLOBALS['TL_LANG']['bbit_og']['typeCustom'],
-	'exclude'		=> true,
-	'inputType'		=> 'text',
-	'eval'			=> array(
-		'mandatory'		=> true,
-		'maxlength'		=> 255,
-		'decodeEntities'=> true,
 		'tl_class'		=> 'w50'
 	)
 );
