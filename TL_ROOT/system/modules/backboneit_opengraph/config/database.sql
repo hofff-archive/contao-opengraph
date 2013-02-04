@@ -18,8 +18,8 @@ CREATE TABLE `tl_page` (
   `bbit_og_image` varchar(1022) NOT NULL default '',
   `bbit_og_imageSize` varchar(255) NOT NULL default '',
   `bbit_og_description` varchar(1022) NOT NULL default '',
-  `bbit_og_curies` blob NULL,
-  `bbit_og_custom` blob NULL,
+--  `bbit_og_curies` blob NULL,
+--  `bbit_og_custom` blob NULL,
   
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
