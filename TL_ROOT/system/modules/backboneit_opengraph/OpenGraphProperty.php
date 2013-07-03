@@ -1,26 +1,26 @@
 <?php
 
 class OpenGraphProperty {
-	
+
 	private $namespace;
-	
+
 	private $name;
-	
+
 	private $content;
-	
+
 	private $prefix;
-	
+
 	public function __construct($namespace = null, $name = null, $content = null, $prefix = null) {
 		$this->setNamespace($namespace);
 		$this->setName($name);
 		$this->setContent($content);
 		$this->setPrefix($prefix);
 	}
-	
+
 	public function __toString() {
 		return $this->getMetaTag();
 	}
-	
+
 	public function getMetaTag($prefix = true) {
 		return $this->isValid() ? sprintf('<meta%s property="%s" content="%s" />',
 			$prefix ? sprintf(' prefix="%s"', specialchars($this->getNamespaceDeclaration())) : '',
@@ -28,19 +28,19 @@ class OpenGraphProperty {
 			specialchars($this->getContent())
 		) : '';
 	}
-	
+
 	public function getNamespaceDeclaration() {
 		return sprintf('%s: %s', $this->getPrefix(), $this->getNamespace());
 	}
-	
+
 	public function getPrefixedName() {
 		return sprintf('%s:%s', $this->getPrefix(), $this->getName());
 	}
-	
+
 	public function isValid() {
 		return $this->hasNamespace() && $this->hasName() && $this->hasContent();
 	}
-	
+
 	public function setNamespace($namespace) {
 		$namespace = strval($namespace);
 		if(strlen($namespace)) {
@@ -50,15 +50,15 @@ class OpenGraphProperty {
 		}
 		return $this;
 	}
-	
+
 	public function hasNamespace() {
 		return isset($this->namespace);
 	}
-	
+
 	public function getNamespace() {
 		return $this->namespace;
 	}
-	
+
 	public function setName($name) {
 		$name = strval($name);
 		if(strlen($name)) {
@@ -68,15 +68,15 @@ class OpenGraphProperty {
 		}
 		return $this;
 	}
-	
+
 	public function hasName() {
 		return isset($this->name);
 	}
-	
+
 	public function getName() {
 		return $this->name;
 	}
-	
+
 	public function setContent($content) {
 		$content = strval($content);
 		if(strlen($content)) {
@@ -86,23 +86,23 @@ class OpenGraphProperty {
 		}
 		return $this;
 	}
-	
+
 	public function hasContent() {
 		return isset($this->content);
 	}
-	
+
 	public function getContent() {
 		return $this->content;
 	}
-	
+
 	public function setPrefix($prefix) {
 		$prefix = strval($prefix);
-		$this->prefix = strlen($prefix) ? $prefix : 'p';
+		$this->prefix = strlen($prefix) ? $prefix : 'og';
 		return $this;
 	}
-	
+
 	public function getPrefix() {
 		return $this->prefix;
 	}
-	
+
 }
