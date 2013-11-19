@@ -20,7 +20,7 @@
 	},
 	"require": {
 		"php": ">=5.2",
-		"contao/core": ">=2.11,<=3.0"
+		"contao/core": ">=3.2-dev,<4"
 	},
 	"replace": {
 		"contao-legacy/backboneit_opengraph": "*"
@@ -30,6 +30,10 @@
 			"sources": {
 				"TL_ROOT/system/modules/backboneit_opengraph": "system/modules/backboneit_opengraph"
 			}
+		},
+		"branch-alias": {
+			"dev-master": "2.x-dev",
+			"dev-development": "3.x-dev"
 		}
 	}
 }
