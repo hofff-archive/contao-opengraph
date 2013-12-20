@@ -20,7 +20,7 @@
 	},
 	"require": {
 		"php": ">=5.2",
-		"contao/core": ">=3.2-dev,<4"
+		"contao/core": ">=3.2,<4"
 	},
 	"replace": {
 		"contao-legacy/backboneit_opengraph": "*"

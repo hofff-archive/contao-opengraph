@@ -15,7 +15,7 @@ CREATE TABLE `tl_page` (
   `bbit_og_title` varchar(255) NOT NULL default '',
   `bbit_og_site` varchar(255) NOT NULL default '',
   `bbit_og_url` varchar(1022) NOT NULL default '',
-  `bbit_og_image` varchar(1022) NOT NULL default '',
+  `bbit_og_image` binary(16) NULL,
   `bbit_og_imageSize` varchar(255) NOT NULL default '',
   `bbit_og_description` varchar(1022) NOT NULL default '',
 --  `bbit_og_curies` blob NULL,
