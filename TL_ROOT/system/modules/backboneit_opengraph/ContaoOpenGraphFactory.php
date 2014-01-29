@@ -74,7 +74,7 @@ class ContaoOpenGraphFactory extends Controller {
 			));
 		}
 
-		if(!$objPage || !$objPage->numRows || $objPage->bbit_og == 'bbit_og_disableTree') {
+		if(!$objPage || (!($objPage instanceof \Model) && !$objPage->numRows) || $objPage->bbit_og == 'bbit_og_disableTree') {
 			return $objOGBD;
 		}
 
