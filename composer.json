@@ -19,7 +19,7 @@
 		"source": "https://github.com/backbone87/contao-opengraph"
 	},
 	"require": {
-		"php": ">=5.2",
+		"php": ">=5.3",
 		"contao/core": ">=3.2,<4"
 	},
 	"replace": {
