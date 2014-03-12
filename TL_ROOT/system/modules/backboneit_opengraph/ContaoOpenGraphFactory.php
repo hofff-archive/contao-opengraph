@@ -13,7 +13,7 @@ class ContaoOpenGraphFactory extends Controller {
 
 	public function generateBasicDataByPageID($intID) {
 		$objOGBD = new OpenGraphBasicData();
-		$objPage = $objOrigin = $this->getPageDetails($intID);
+		$objPage = $objOrigin = $intID == $GLOBALS['objPage']->id ? $GLOBALS['objPage'] : $this->getPageDetails($intID);
 		if(!$objPage) {
 			return $objOGBD;
 		}
