@@ -1,7 +1,5 @@
 <?php
 
-use Contao\FilesModel;
-
 class ContaoOpenGraphFactory extends Controller {
 
 	public static function create() {
