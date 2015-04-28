@@ -1,37 +1,45 @@
 {
-	"name": "backboneit/contao-opengraph",
-	"description": "Define OpenGraph meta data in Contao",
-	"keywords": [ "facebook", "share", "like", "social", "opengraph", "tags", "micro data", "meta data", "contao" ],
-	"type": "contao-module",
-	"license": "LGPL-3.0+",
-	"authors": [
-		{
-			"name": "Oliver Hoff",
-			"email": "oliver@hofff.com",
-			"homepage": "http://hofff.com/",
-			"role": "Developer"
+	"name" : "backboneit/contao-opengraph",
+	"description" : "Define OpenGraph meta data in Contao",
+	"keywords" : [
+		"facebook",
+		"share",
+		"like",
+		"social",
+		"opengraph",
+		"tags",
+		"micro data",
+		"meta data",
+		"contao"
+	],
+	"type" : "contao-module",
+	"license" : "LGPL-3.0+",
+	"authors" : [{
+			"name" : "Oliver Hoff",
+			"email" : "oliver@hofff.com",
+			"homepage" : "http://hofff.com/",
+			"role" : "Developer"
 		}
 	],
-	"support": {
-		"issues": "https://github.com/backbone87/contao-opengraph/issues",
-		"forum": "https://community.contao.org/de/showthread.php?18871-backboneit_opengraph-OpenGraph-Metadaten-in-Contao-definieren",
-		"irc": "irc://irc.freenode.org/contao.dev",
-		"source": "https://github.com/backbone87/contao-opengraph"
+	"support" : {
+		"issues" : "https://github.com/backbone87/contao-opengraph/issues",
+		"forum" : "https://community.contao.org/de/showthread.php?18871-backboneit_opengraph-OpenGraph-Metadaten-in-Contao-definieren",
+		"irc" : "irc://irc.freenode.org/contao.dev",
+		"source" : "https://github.com/backbone87/contao-opengraph"
 	},
-	"require": {
-		"php": ">=5.3",
-		"contao/core": ">=3.2,<4"
+	"require" : {
+		"php" : ">=5.3",
+		"contao/core" : ">=3.2,<4"
 	},
-	"replace": {
-		"contao-legacy/backboneit_opengraph": "*"
+	"replace" : {
+		"backboneit/contao-opengraph": "self.version",
+		"contao-legacy/backboneit_opengraph" : "self.version"
 	},
-	"extra": {
-		"contao": {
-			"sources": {
-				"TL_ROOT/system/modules/backboneit_opengraph": "system/modules/backboneit_opengraph"
+	"extra" : {
+		"contao" : {
+			"sources" : {
+				"TL_ROOT/system/modules/backboneit_opengraph" : "system/modules/backboneit_opengraph"
 			}
-		},
-		"branch-alias": {
 		}
 	}
 }
