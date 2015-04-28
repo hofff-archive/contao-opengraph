@@ -1,5 +1,5 @@
 {
-	"name": "backboneit/contao-opengraph",
+	"name": "hofff/contao-opengraph",
 	"description": "Define OpenGraph meta data in Contao",
 	"keywords": [ "facebook", "share", "like", "social", "opengraph", "tags", "micro data", "meta data", "contao" ],
 	"type": "contao-module",
