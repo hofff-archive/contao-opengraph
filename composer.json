@@ -1,5 +1,5 @@
 {
-	"name" : "backboneit/contao-opengraph",
+	"name" : "hofff/contao-opengraph",
 	"description" : "Define OpenGraph meta data in Contao",
 	"keywords" : [
 		"facebook",
@@ -32,7 +32,7 @@
 		"contao/core" : ">=3.2,<4"
 	},
 	"replace" : {
-		"backboneit/contao-opengraph": "self.version",
+		"backboneit/contao-opengraph" : "self.version",
 		"contao-legacy/backboneit_opengraph" : "self.version"
 	},
 	"extra" : {
