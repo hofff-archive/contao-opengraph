@@ -28,9 +28,9 @@
 		"source" : "https://github.com/backbone87/contao-opengraph"
 	},
 	"require" : {
-		"php" : ">=5.3",
-		"contao/core-bundle":"~3.2 || ~4.2",
-		"contao-community-alliance/composer-plugin":"~2.4 || ~3.0"
+		"php" : "^5.6 || ^7.0",
+		"contao/core-bundle" : "^3.2 || ^4.2",
+		"contao-community-alliance/composer-plugin" : "^2.4 || ^3.0"
 	},
 	"replace" : {
 		"backboneit/contao-opengraph" : "self.version",
